@@ -5,9 +5,11 @@ import type {
   AchievementBadge,
   EducationalResource,
   HelpArticle,
-  FeatureAnnouncement,
-  hasStatus
+  FeatureAnnouncement
 } from '@/types'
+
+// Changed: Import hasStatus from types instead of declaring it locally
+import { hasStatus } from '@/types'
 
 export const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
@@ -177,9 +179,4 @@ export async function getActiveAnnouncements(): Promise<FeatureAnnouncement[]> {
     }
     throw new Error('Failed to fetch announcements')
   }
-}
-
-// Helper for error status checking
-function hasStatus(error: unknown): error is { status: number } {
-  return typeof error === 'object' && error !== null && 'status' in error
 }

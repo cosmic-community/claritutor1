@@ -32,8 +32,14 @@ export async function POST(request: Request) {
       max_tokens: 1000,
     })
     
+    // Changed: Add null check for completion.choices[0]
+    const firstChoice = completion.choices[0]
+    if (!firstChoice) {
+      throw new Error('No response from OpenAI')
+    }
+    
     return NextResponse.json({
-      message: completion.choices[0].message
+      message: firstChoice.message
     })
   } catch (error) {
     console.error('Chat API error:', error)
